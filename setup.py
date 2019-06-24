@@ -19,12 +19,12 @@ from __future__ import print_function
 
 from setuptools import setup
 
-description = """PySC2 - StarCraft II Learning Environment
+description = """PyXS2 - StarCraft II Learning Environment
 
-PySC2 is DeepMind's Python component of the StarCraft II Learning Environment
+PyXS is DeepMind's Python component of the StarCraft II Learning Environment
 (SC2LE). It exposes Blizzard Entertainment's StarCraft II Machine Learning API
 as a Python RL Environment. This is a collaboration between DeepMind and
-Blizzard to develop StarCraft II into a rich environment for RL research. PySC2
+Blizzard to develop StarCraft II into a rich environment for RL research. PyXS
 provides an interface for RL agents to interact with StarCraft 2, getting
 observations and sending actions.
 
@@ -33,28 +33,28 @@ https://deepmind.com/blog/deepmind-and-blizzard-open-starcraft-ii-ai-research-en
 which outlines our motivation for using StarCraft II for DeepRL research, and
 some initial research results using the environment.
 
-Read the README at https://github.com/deepmind/pysc2 for more information.
+Read the README at https://github.com/deepmind/PyXS for more information.
 """
 
 setup(
-    name='PySC2',
+    name='PyXS2',
     version='2.0.1',
-    description='Starcraft II environment and library for training agents.',
+    description='xspace environment and library for training agents.',
     long_description=description,
-    author='DeepMind',
-    author_email='pysc2@deepmind.com',
+    author='gamert',
+    author_email='gamert@dw.com',
     license='Apache License, Version 2.0',
-    keywords='StarCraft AI',
-    url='https://github.com/deepmind/pysc2',
+    keywords='XSpace AI',
+    url='https://github.com/gamert/PySC2TencentExtension',
     packages=[
-        'pysc2',
-        'pysc2.agents',
-        'pysc2.bin',
-        'pysc2.env',
-        'pysc2.lib',
-        'pysc2.maps',
-        'pysc2.run_configs',
-        'pysc2.tests',
+        'pyxs2',
+        'pyxs2.agents',
+        'pyxs2.bin',
+        'pyxs2.env',
+        'pyxs2.lib',
+        'pyxs2.maps',
+        'pyxs2.run_configs',
+        'pyxs2.tests',
     ],
     install_requires=[
         'absl-py>=0.1.0',
@@ -68,7 +68,7 @@ setup(
         'protobuf>=2.6',
         'pygame',
         'requests',
-        's2clientprotocol>=3.19.0.58400.0',
+        'xs2clientprotocol>=3.19.0.58400.0',
         'six',
         'sk-video',
         'websocket-client',
@@ -76,9 +76,9 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pysc2_agent = pysc2.bin.agent:entry_point',
-            'pysc2_play = pysc2.bin.play:entry_point',
-            'pysc2_replay_info = pysc2.bin.replay_info:entry_point',
+            'pyxs2_agent = pyxs2.bin.agent:entry_point',
+            'pyxs2_play = pyxs2.bin.play:entry_point',
+            'pyxs2_replay_info = pyxs2.bin.replay_info:entry_point',
         ],
     },
     classifiers=[

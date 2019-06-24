@@ -188,7 +188,7 @@ that require points on the screen or the minimap, however, expect the
 coordinates as `(x, y)`. The origin `(0, 0)` is at the top-left corner in both
 cases.
 
-See the [scripted agents](../pysc2/agents/scripted_agent.py) for an example of
+See the [scripted agents](../pyxs2/agents/scripted_agent.py) for an example of
 passing a screen coordinate to an action:
 
 ```python
@@ -219,7 +219,7 @@ information as RGB pixels except that the information is decomposed and
 structured. There are ~25 feature layers broken down between the screen and
 minimap and exposed as `feature_screen` and `feature_minimap`.
 
-The full list is defined in `pysc2.lib.features`.
+The full list is defined in `pyxs2.lib.features`.
 
 ###### Minimap
 
@@ -274,7 +274,7 @@ These are the screen feature layers:
 *   **player_relative**: Which units are friendly vs hostile. Takes values in
     [0, 4], denoting [background, self, ally, neutral, enemy] units
     respectively.
-*   **unit_type**: A unit type id, which can be looked up in pysc2/lib/units.py.
+*   **unit_type**: A unit type id, which can be looked up in pyxs2/lib/units.py.
 *   **selected**: Which units are selected.
 *   **hit_points**: How many hit points the unit has.
 *   **energy**: How much energy the unit has.
@@ -385,15 +385,15 @@ Instead, we created function actions that are rich enough to give
 composability, without the complexity of an arbitrary hierarchy. This is based
 on the mental model of a C-style function call which can take some arguments of
 specific types. The full set of valid types and functions are defined in
-`ValidActions` in `pysc2.lib.actions`, and then each observation specifies which
+`ValidActions` in `pyxs2.lib.actions`, and then each observation specifies which
 of the available function is valid this frame. Each action is a single
-`FunctionCall` in `pysc2.lib.actions` with all its arguments filled.
+`FunctionCall` in `pyxs2.lib.actions` with all its arguments filled.
 
-The full set of types and functions are defined in `pysc2.lib.actions`. The set
+The full set of types and functions are defined in `pyxs2.lib.actions`. The set
 of functions is hard coded and limited to just the actions that humans have
 taken, as seen by a large number of replays. Hard coding the functions means
 that actions created in custom maps won't be usable until they are added to
-`pysc2.lib.actions`.
+`pyxs2.lib.actions`.
 
 The semantic meaning of these actions can mainly be found by searching:
 [liquipedia.net/starcraft2](http://liquipedia.net/starcraft2/) or
@@ -404,7 +404,7 @@ The semantic meaning of these actions can mainly be found by searching:
 To see which actions exist run:
 
 ```shell
-$ python -m pysc2.bin.valid_actions
+$ python -m pyxs2.bin.valid_actions
 ```
 
 optionally with `--hide_specific`, `--screen_resolution` or
@@ -466,7 +466,7 @@ The function names should be unique, stable and meaningful. The function and
 type ids are the index into the list of `functions` and `types`.
 
 The `types` are a predefined list of argument types that can be used in a
-function call. The exact definitions are in `pysc2.lib.actions.TYPES`
+function call. The exact definitions are in `pyxs2.lib.actions.TYPES`
 
 #### Action categories
 
@@ -501,19 +501,19 @@ medivacs that can't attack but should come along as if they can,
 For now only the general actions are exposed through the environment api so only
 the general actions should be returned in the available actions observation.
 
-In `pysc2.lib.actions.FUNCTIONS` specific functions have an additional parameter
+In `pyxs2.lib.actions.FUNCTIONS` specific functions have an additional parameter
 that references the general parameter.
 
 #### Example usage
 
-Take a look at the [random agent](../pysc2/agents/random_agent.py) for an
+Take a look at the [random agent](../pyxs2/agents/random_agent.py) for an
 example of how to consume `ValidActions` and fill `FunctionCall`s.
 
 The following snippet shows how to print a human-readable list of available
 actions:
 
 ```python
-    from pysc2.lib import actions
+    from pyxs2.lib import actions
 
     for action in obs.observation.available_actions:
         print(actions.FUNCTIONS[action])
@@ -521,11 +521,11 @@ actions:
 
 ## RL Environment
 
-The main SC2 environment is at `pysc2.env.sc2_env`, with the action and
-observation space defined in `pysc2.lib.features`.
+The main SC2 environment is at `pyxs2.env.sc2_env`, with the action and
+observation space defined in `pyxs2.lib.features`.
 
 The most important argument is `map_name`, which is how to find the map.
-Find the names by using `pysc2.bin.map_list` or by looking in `pysc2/maps/*.py`.
+Find the names by using `pyxs2.bin.map_list` or by looking in `pyxs2/maps/*.py`.
 
 `players` lets your specify the number and type of players. At the moment only
 one or two players are supported. Give it a list of `sc2_env.Agent` or

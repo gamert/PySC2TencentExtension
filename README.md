@@ -1,5 +1,5 @@
 # Tencent AI Lab PySC2 Extension
-**Note: the original Deepmind PySC2 README can be found [here](https://github.com/deepmind/pysc2/blob/master/README.md).**
+**Note: the original Deepmind PySC2 README can be found [here](https://github.com/deepmind/pyxs2/blob/master/README.md).**
 
 Besides the "feature_layer" observations/actions interface, 
 this Tencent AI Lab fork also exposes the "raw" interface of [`s2client-proto`](https://github.com/Blizzard/s2client-proto) to enable a per-unit-control.
