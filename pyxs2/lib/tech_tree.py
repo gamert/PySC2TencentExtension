@@ -2,6 +2,7 @@ from pyxs2.lib import RACE, UNIT_TYPEID, UPGRADE_ID, ABILITY_ID
 from pyxs2.lib import data_raw_3_16, data_raw_4_0
 import distutils.version
 
+##
 class TypeData(object):
     def __init__(self, race=0, mineralCost=0, gasCost=0, supplyCost=0, buildTime=0, isUnit=False, isBuilding=False, isWorker=False, isRefinery=False, isSupplyProvider=False, isResourceDepot=False, isAddon=False, buildAbility=0, warpAbility=0, whatBuilds=[], requiredUnits=[], requiredUpgrades=[]):
         self.race = race
@@ -22,6 +23,7 @@ class TypeData(object):
         self.requiredUnits = requiredUnits
         self.requiredUpgrades = requiredUpgrades
 
+##
 class TechTree(object):
     def __init__(self):
         self.fps = 16

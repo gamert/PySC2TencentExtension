@@ -1,6 +1,7 @@
 import numpy as np
 import collections
 
+## 单位属性
 class UnitFlags(collections.namedtuple("UnitFlags", [
     "is_selected", "is_on_screen", "is_blip",
     "is_powered", "is_flying", "is_burrowed"])):
@@ -16,6 +17,7 @@ class UnitFlags(collections.namedtuple("UnitFlags", [
         self.is_flying,
         self.is_burrowed], dtype=np.bool_)
 
+## 单位浮点属性
 class UnitFloatAttr(collections.namedtuple("UnitFloats", [
     "pos_x", "pos_y", "pos_z",
     "facing", "radius", "build_progress",
@@ -132,6 +134,7 @@ class Unit(collections.namedtuple("unit", [
   def float_attrs(self):
     return self.float_attr
 
+  # @u
   def __new__(cls, u=None):
     if u is None:
       return Exception("input unit is none")

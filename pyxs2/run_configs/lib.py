@@ -30,10 +30,12 @@ class Version(collections.namedtuple("Version", [
   """Represents a single version of the game."""
   __slots__ = ()
 
-
+## 用于不同平台(Win,Mac,Linux等)的Exe启动配置
 class RunConfig(object):
   """Base class for different run configs."""
-
+  #
+  # @data_dir: G:\Games\StarCraft II
+  # @tmp_dir:
   def __init__(self, replay_dir, data_dir, tmp_dir, cwd=None, env=None):
     """Initialize the runconfig with the various directories needed.
 

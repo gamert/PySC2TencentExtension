@@ -89,7 +89,7 @@ def valid_status(*valid):
     return _valid_status
   return decorator
 
-
+##
 class RemoteController(object):
   """Implements a python interface to interact with the SC2 binary.
 
@@ -108,6 +108,7 @@ class RemoteController(object):
     self._client = protocol.StarcraftProtocol(sock)
     self.ping()
 
+  ## @proc
   @sw.decorate
   def _connect(self, host, port, proc, timeout_seconds):
     """Connect to the websocket, retrying as needed. Returns the socket."""

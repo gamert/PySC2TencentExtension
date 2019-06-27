@@ -263,6 +263,7 @@ class SC2Env(environment.Base):
       require_raw = True
       interfaces.append(self._get_interface(interface_format, require_raw))
 
+    # 启动游戏
     if self._num_agents == 1:
       self._launch_sp(map_inst, interfaces[0])
     else:
@@ -270,18 +271,25 @@ class SC2Env(environment.Base):
 
     self._finalize(agent_interface_format, interfaces, visualize)
 
+  #@agent_interface_formats
+  #@interfaces:
+  #@visualize: bool 是否可见
   def _finalize(self, agent_interface_formats, interfaces, visualize):
+    #
     game_info = self._parallel.run(c.game_info for c in self._controllers)
     if not self._map_name:
       self._map_name = game_info[0].map_name
 
+    #
     for g, interface in zip(game_info, interfaces):
       if g.options.render != interface.render:
         logging.warning(
             "Actual interface options don't match requested options:\n"
             "Requested:\n%s\n\nActual:\n%s", interface, g.options)
 
+    #!!!构造特征...
     self._features = [
+        #Features
         features.features_from_game_info(
             game_info=g,
             use_feature_units=agent_interface_format.use_feature_units,
@@ -296,7 +304,7 @@ class SC2Env(environment.Base):
       self._renderer_human.init(game_info[0], static_data)
     else:
       self._renderer_human = None
-
+    #
     self._metrics = metrics.Metrics(self._map_name)
     self._metrics.increment_instance()
 
@@ -330,8 +338,13 @@ class SC2Env(environment.Base):
 
     return interface
 
+  # 启动单人模式..
+  # @map_inst: 地图实例
+  # @interface:
   def _launch_sp(self, map_inst, interface):
+    # 启动进程，可能会启动多个？
     self._sc2_procs = [self._run_config.start(version=self._version)]
+    # 返回RemoteController [rpc 网络链接...]?
     self._controllers = [p.controller for p in self._sc2_procs]
 
     # Create the game.
@@ -349,11 +362,13 @@ class SC2Env(environment.Base):
                                 difficulty=p.difficulty)
     if self._random_seed is not None:
       create.random_seed = self._random_seed
+    #创建游戏...
     self._controllers[0].create_game(create)
-
+    #[请求]加入游戏...
     join = sc_pb.RequestJoinGame(race=agent_race, options=interface)
     self._controllers[0].join_game(join)
 
+  # 启动多玩家模式，允许其他玩家接入
   def _launch_mp(self, map_inst, interfaces):
     # Reserve a whole bunch of ports for the weird multiplayer implementation.
     self._ports = _pick_unused_ports(self._num_agents * 2)
@@ -407,10 +422,12 @@ class SC2Env(environment.Base):
     self._create_req = create
     self._join_reqs = join_reqs
 
+  # 观察特征[dic]:
   def observation_spec(self):
     """Look at Features for full specs."""
     return tuple(f.observation_spec() for f in self._features)
 
+  # 行动特征:
   def action_spec(self):
     """Look at Features for full specs."""
     return tuple(f.action_spec() for f in self._features)
@@ -467,12 +484,16 @@ class SC2Env(environment.Base):
     self._state = environment.StepType.MID
     return self._step()
 
+  # 
   def _step(self):
+    #
     with self._metrics.measure_step_time(self._step_mul):
       self._parallel.run((c.step, self._step_mul) for c in self._controllers)
 
+    #
     with self._metrics.measure_observation_time():
       self._obs = self._parallel.run(c.observe for c in self._controllers)
+      #
       agent_obs = [f.transform_obs(o) for f, o in zip(
           self._features, self._obs)]
       game_info = [None for c in self._controllers]

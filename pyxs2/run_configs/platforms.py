@@ -93,7 +93,7 @@ def _read_execute_info(path, parents):
             exec_path = os.path.dirname(exec_path)
           return exec_path
 
-
+## 本地配置(用于启动不同平台?):
 class LocalBase(lib.RunConfig):
   """Base run config for public installs."""
 
@@ -105,8 +105,32 @@ class LocalBase(lib.RunConfig):
         data_dir=base_dir, tmp_dir=None, cwd=cwd, env=env)
     self._exec_name = exec_name
 
+
   def start(self, version=None, **kwargs):
     """Launch the game."""
+    return self.start_xs2(version)
+    #return self.start_sc2(version)
+
+  # 启动指定版本xs2:
+  def start_xs2(self, version=None, **kwargs):
+    """Launch the xs2."""
+    if not os.path.isdir(self.data_dir):
+      raise sc_process.SC2LaunchError(
+          "Expected to find StarCraft II installed at '%s'. If it's not "
+          "installed, do that and run it once so auto-detection works. If "
+          "auto-detection failed repeatedly, then set the SC2PATH environment "
+          "variable with the correct location." % self.data_dir)
+    exec_path = os.path.join( self.data_dir, self._exec_name)
+
+    if not os.path.exists(exec_path):
+      raise sc_process.SC2LaunchError("No SC2 binary found at: %s" % exec_path)
+
+    return sc_process.StarcraftProcess(
+        self, exec_path=exec_path, version=version, **kwargs)
+
+  # 启动指定版本sc2:
+  def start_sc2(self, version=None, **kwargs):
+    """Launch the sc2."""
     if not os.path.isdir(self.data_dir):
       raise sc_process.SC2LaunchError(
           "Expected to find StarCraft II installed at '%s'. If it's not "

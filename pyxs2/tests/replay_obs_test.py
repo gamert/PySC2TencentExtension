@@ -139,7 +139,7 @@ def _obs_string(obs):
     out += '\n'
   return out
 
-
+##
 class GameController(object):
   """Wrapper class for interacting with the game in play/replay mode."""
 

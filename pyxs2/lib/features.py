@@ -77,36 +77,37 @@ class Effects(enum.IntEnum):
   # pylint: enable=invalid-name
 
 
+## 累计得分:
 class ScoreCumulative(enum.IntEnum):
   """Indices into the `score_cumulative` observation."""
   score = 0
-  idle_production_time = 1
-  idle_worker_time = 2
-  total_value_units = 3
-  total_value_structures = 4
-  killed_value_units = 5
+  idle_production_time = 1  # 空闲生产时间
+  idle_worker_time = 2      # 空闲工人时间
+  total_value_units = 3     # 单位总数
+  total_value_structures = 4# 建筑总数
+  killed_value_units = 5    # 击杀总数
   killed_value_structures = 6
-  collected_minerals = 7
-  collected_vespene = 8
-  collection_rate_minerals = 9
+  collected_minerals = 7    # 采矿
+  collected_vespene = 8     # 采气
+  collection_rate_minerals = 9 #
   collection_rate_vespene = 10
-  spent_minerals = 11
-  spent_vespene = 12
+  spent_minerals = 11       # 消耗
+  spent_vespene = 12        # 消耗
 
-
+##
 class Player(enum.IntEnum):
   """Indices into the `player` observation."""
   player_id = 0
-  minerals = 1
-  vespene = 2
+  minerals = 1      # 矿
+  vespene = 2       # 气
   food_used = 3
   food_cap = 4
   food_army = 5
   food_workers = 6
-  idle_worker_count = 7
-  army_count = 8
-  warp_gate_count = 9
-  larva_count = 10
+  idle_worker_count = 7 #空闲工人数
+  army_count = 8        #士兵数
+  warp_gate_count = 9   #
+  larva_count = 10      # 幼体(虫族)
 
 
 class UnitLayer(enum.IntEnum):
@@ -517,7 +518,7 @@ def parse_agent_interface_format(
       use_feature_units=use_feature_units
   )
 
-
+##
 def features_from_game_info(
     game_info,
     use_feature_units=False,
@@ -594,7 +595,7 @@ def _init_valid_functions(action_dimensions):
 
   return actions.ValidActions(types, functions)
 
-
+##
 class Features(object):
   """Render feature layers from SC2 Observation protos into numpy arrays.
 
@@ -658,6 +659,8 @@ class Features(object):
         -self._world_to_world_tl.fwd_pt(camera_center) *
         self._world_tl_to_world_camera_rel.scale)
 
+  #
+  # 返回观察特征dict:
   def observation_spec(self):
     """The observation spec for the SC2 environment.
 
